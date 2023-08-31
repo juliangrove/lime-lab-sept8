@@ -1,0 +1,38 @@
+#+latex_class: slides
+#+setupfile: setup.org
+#+options: H:2 toc:nil
+#+beamer_frame_LEVEL: 1
+#+beamer_theme: metropolis
+
+#+bibliography:lime-lab-sept8.bib
+#+cite_export: biblatex authoryear-comp
+
+#+Author: Julian Grove
+#+beamer_header: \institute[University of Rochester]{FACTS.lab, University of Rochester}
+#+Title: Bayesian semantics in typed λ-calculus
+#+Date: LiMe Lab, September 8, 2023
+ 
+** Joint work with:
+*** :BMCOL:
+    :PROPERTIES:
+    :beamer_env: block
+    :beamer_col: 0.6
+    :END:
+    #+attr_latex: :width 100px
+    [[./aaron-white.jpg]]
+*** 
+    :PROPERTIES:
+    :beamer_env: block
+    :beamer_col: 0.6
+    :END:  
+    Aaron Steven White
+
+* Motivation
+** Slide
+   [cite:@grove_probabilistic_2023]
+    
+** References
+   :PROPERTIES:
+   :beamer_opt: allowframebreaks
+   :END:
+   #+print_bibliography:
