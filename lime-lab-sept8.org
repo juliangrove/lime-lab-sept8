@@ -9,28 +9,50 @@
 
 #+Author: Julian Grove
 #+beamer_header: \institute[University of Rochester]{FACTS.lab, University of Rochester}
-#+Title: Bayesian semantics in typed λ-calculus
+#+Title: Factivity, presupposition projection, and the role of discrete knowledge in gradient inference judgments
 #+Date: LiMe Lab, September 8, 2023
  
-** Joint work with:
-*** :BMCOL:
-    :PROPERTIES:
-    :beamer_env: block
-    :beamer_col: 0.6
-    :END:
-    #+attr_latex: :width 100px
+** Joint work
+   #+attr_latex: :width 300px
+    [[./paper.png]]
+
+   #+attr_latex: :width 70px
     [[./aaron-white.jpg]]
-*** 
-    :PROPERTIES:
-    :beamer_env: block
-    :beamer_col: 0.6
-    :END:  
-    Aaron Steven White
 
 * Motivation
-** Slide
-   [cite:@grove_probabilistic_2023]
-    
+** Big question
+   How should we use inference datasets to test semantic theories?
+
+   #+beamer: \pause \bigskip
+   *A couple of sub-questions*:
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - How do we get at ``true'' inference judgments? (Judgment data tends to be
+     influenced by non-semantic factors, e.g., participant response strategies,
+     accuracy).
+   - How do we interpret inference data?
+     - Do we compare mean responses among conditions? If so, what do such means
+       tell us?
+     - Do we somehow take into account the whole response distribution?
+
+  #+beamer: \pause
+  #+begin_center
+  *We need linking assumptions...*
+  #+end_center
+
+** This talk
+   We will do a few things:
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - We will look at particular empirical domain: factive inferences.
+   - We will develop a compositional probabilistic semantics that allows us to
+     formulate Bayesian models of inference data (following
+     [cite/t:@grove_probabilistic_2023]).
+   - We will use this semantics to /combine/ theories of factivity with linking
+     assumptions seamlessly.  
+
+* Factivity and gradience
+   
 ** References
    :PROPERTIES:
    :beamer_opt: allowframebreaks
