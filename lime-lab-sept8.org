@@ -52,7 +52,11 @@
      assumptions seamlessly.  
 
 * Factivity and gradience
-   
+
+* Probabilistic semantics
+
+* Models of factivity
+
 ** References
    :PROPERTIES:
    :beamer_opt: allowframebreaks
