@@ -168,7 +168,7 @@
 ** [cite/t:@grove_probabilistic_2023]
    Following [cite/t:@grove_probabilistic_2023], we provide an interface for
    stating a probabilistic semantics using /monads/. \\
-   #+begin: \bigskip \pause
+   #+beamer: \bigskip \pause
    This just means we have the following ingredients:
    #+beamer: \pause
    #+attr_beamer: :overlay <+->
@@ -189,9 +189,9 @@
 ** /tall/ as an example
    In a non-probabilistic semantics, since /tall/ is an adjective, you might give
    it a meaning of type $e → t$:
-   $$λx.\ct{height}(x) ≥ d$$
+   $$λx.\ct{height}(x) ≥ {\color{gb-orange}d}$$
    #+beamer: \pause
-   But where does the threshold come from?
+   But where does the threshold @@beamer:${\color{gb-orange}d}$@@ come from?
 
 ** /tall/ as an example
    Solution: the meaning of /tall/ is represented by a probability distribution.
@@ -208,7 +208,7 @@
      #+end_export
    - Returns the property true of an individual if their height exceeds the
      threshold $d$.
-     - But $d$ takes on the probability distribution represented by
+     - But now $d$ takes on the probability distribution represented by
        $\ct{thresholdPrior}$.
      - So the meaning of /tall/ represents a probability distribution over
        /properties/, each one fixed by some threshold $d$.  
@@ -373,6 +373,13 @@
    #+attr_latex: :width 200px
    [[./images/fit_elpd.pdf]]
 
+** Why these differences?
+   Posterior predictive distributions, collapsing across all complement clauses
+   and background facts:
+   #+attr_latex: :width 300px
+   [[./images/contentful_all_6_pp.pdf]]
+   #+beamer: \pause
+
 ** A few follow-ups
    Granted, this investigation is /post hoc/. To draw firmer conclusions, we
    should test these models against newly collected data. \\
@@ -381,7 +388,7 @@
    #+beamer: \pause
    #+attr_beamer: :overlay <+->
    - Replicate [cite/a:@degen_prior_2021]'s experiment and use the posterior
-     parameter distributions from our first set of models as priors in a new st
+     parameter distributions from our first set of models as priors in a new set
      of models.
    - Modify the methodology slightly, so that complement clauses have minimal
      lexical content.
