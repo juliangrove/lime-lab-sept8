@@ -79,6 +79,7 @@ stdenv.mkDerivation {
         scheme-tetex
         stackengine
         stmaryrd
+        tcolorbox
         tikz-qtree
         tikzsymbols
         tipa

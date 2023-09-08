@@ -23,17 +23,23 @@
 # #+beamer_header:     test {\ifentrytype{inproceedings}}%
 # #+beamer_header:  }{}{\printtext{\bibstring{in}\intitlepunct}}} 
 # #+beamer_header: \setlength\bibitemsep{1.5\itemsep}
+#+beamer_header: \usepackage{tcolorbox}
 #+beamer_header: \usepackage{tikz}
 #+beamer_header: \usetikzlibrary{arrows,arrows.meta,automata}
 #+beamer_header: \definecolor{highlight}{RGB}{7,102,120}
 #+beamer_header: \definecolor{dim}{RGB}{235,219,178}
 #+beamer_header: \definecolor{dimmer}{RGB}{150,130,50}
 #+beamer_header: \newcommand{\ct}[1]{\textsf{#1}}
+#+beamer_header: \newcommand\abbr[1]{\texttt{\textscale{0.9}{#1}}}
+#+beamer_header: \newcommand\vect[1]{{\bf#1}}
 #+beamer_header: \newcommand{\eval}[1]{#1^\lightning}
 #+beamer_header: \newcommand\observe{\mathit{observe}}
 #+beamer_header: \newcommand\reset{\mathit{reset}}
 #+beamer_header: \newcommand\factor{\mathit{factor}}
 #+beamer_header: \def\divd{\ |\ }
+#+beamer_header: \definecolor{gb-orange}{HTML}{d65d0e}
+#+beamer_header: \newtcbox{\purebox}{nobeforeafter,tcbox raise base,boxrule=0.5pt,top=0mm,bottom=0mm,left=0mm,right=0mm,arc=3pt,boxsep=2pt,colframe=gb-orange,colback=white}
+#+beamer_header: \newcommand{\pure}[1]{\purebox{\ensuremath{#1}}}
 #+beamer_header: \newcommand{\maptyp}[1]{\overline{#1}}
 #+beamer_header: \usepackage[verbose]{newunicodechar}
 #+beamer_header: \newunicodechar{¬}{\ensuremath{\neg}} % 

@@ -14,26 +14,40 @@
  
 ** Joint work
    #+attr_latex: :width 300px
-    [[./paper.png]]
-
-   #+attr_latex: :width 70px
-    [[./aaron-white.jpg]]
+    [[./images/paper.png]]
+   #+beamer: \vspace{-1cm}
+   
+*** :BMCOL:
+    :PROPERTIES:
+    :beamer_env: block
+    :beamer_col: 0.8
+    :END:
+    #+beamer: \mbox{}\hspace{1cm}
+    #+attr_latex: :width 70px
+    [[./images/aaron-white.jpg]]
+*** 
+    :PROPERTIES:
+    :beamer_env: block
+    :beamer_col: 0.2
+    :END:  
+    @@beamer:\hspace{-35mm}@@ Aaron Steven White \\
+    @@beamer:\hspace{-35mm}@@ UofR
 
 * Motivation
 ** Big question
    How should we use inference datasets to test semantic theories?
 
-   #+beamer: \pause \bigskip
+   #+beamer: \bigskip \pause
    *A couple of sub-questions*:
    #+beamer: \pause
    #+attr_beamer: :overlay <+->
-   - How do we get at ``true'' inference judgments? (Judgment data tends to be
-     influenced by non-semantic factors, e.g., participant response strategies,
-     accuracy).
-   - How do we interpret inference data?
+   - How do we get at ``true'' inference judgments?
+     - Judgment data tends to be influenced by non-semantic factors, e.g.,
+       participant response strategies, participant accuracy.
+   - Different question: how do we /interpret/ inference data?
      - Do we compare mean responses among conditions? If so, what do such means
-       tell us?
-     - Do we somehow take into account the whole response distribution?
+       represent?
+     - Should we somehow take into account the whole response distribution?
 
   #+beamer: \pause
   #+begin_center
@@ -52,11 +66,372 @@
      assumptions seamlessly.  
 
 * Factivity and gradience
+** Factivity
+   #+begin_export beamer
+   \ex[exno=1] Jo loves that Mo Left. \\
+   $↝$ Mo left.
+   \xe
+   #+end_export
+   #+beamer: \pause
+   This inference patterns like a presupposition, using family-of-sentence tests
+   [cite:@chierchia_meaning_1990]:
+   #+begin_export beamer
+   \pex[exno=2]
+   \a Jo doesn't love that Mo Left.
+   \a Does Jo love that Mo left?
+   \a If Jo loves that Mo Left, she'll also love that Bo left. \\
+   $↝$ Mo left.
+   \xe
+   #+end_export
 
-* Probabilistic semantics
+** Gradience
+   What sorts of inference patterns arise from uses of factive predicates in an
+   experimental setting?
+   - E.g., if you ask someone to rate the likelihood that Mo left, given that /Jo
+     loves that Mo left/ is true.
 
+** [cite/t:@white_role_2018]
+   #+begin_center
+   `Someone {discovered, didn't discover} that a particular thing happened.' \\
+   #+beamer: \bigskip \pause
+   `Did that thing happen?' \\
+   #+beamer: \bigskip
+   (/yes/, /maybe or maybe not/, /no/)
+   #+end_center
+    
+** [cite/t:@white_role_2018]
+    #+attr_latex: :width 220px
+    [[./images/veridicality_factivity.pdf]]
+    #+begin_center
+    \(x\)-axis: negative polarity; \(y\)-axis: positive polarity
+    #+end_center
+    
+** [cite/t:@degen_are_2022]
+   #+attr_latex: :width 300px
+   [[./images/projection.png]]
+
+** [cite/t:@degen_are_2022]
+   #+attr_latex: :width 300px
+   [[./images/projection_no_fact_means.pdf]]
+
+** Why is there gradience?
+   One possibility:
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - Different predicates boost the certainty associated with an inference to
+     different degrees [cite:@tonhauser_how_2018].
+   - For example, /discover/ makes its complement clause more likely to be true.
+     (But not as much more likely as, say, /know/.)
+   #+beamer: \bigskip \pause
+   Another possibility:
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - Predicates are generally ambiguous between being factive or non-factive.
+     But different predicates are factive with different frequencies, and it is
+     these frequencies which differ among one another in a gradient fashion.
+   - It is just that /discover/'s average factivity is less than /know/'s.
+
+** Hypotheses
+   Two hypotheses about the source of gradience among by-predicate means:
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - /The Fundamental Discreteness Hypothesis/ \\
+     Factivity is a discrete semantic property of at least some token
+     occurrences clause-embedding predicates. (A given occurrence of a
+     particular predicate either triggers a projective inference, or it does not
+     trigger a projective inference.)
+   - /The Fundamental Gradience Hypothesis/ \\
+     The gradient distinctions among predicates reflect the different gradient
+     contributions specific predicates make to inferences about the truth of
+     their complement clauses.
+
+** Hypotheses
+   The fundamental discreteness hypothesis represents the classical view
+   [cite:@kiparsky_fact_1970; @karttunen_observations_1971; i.a.]. \\
+   #+beamer: \bigskip \pause
+   The fundamental gradience hypothesis represents a more recent view, i.e.,
+   that presupposition triggers can trigger inferences gradiently
+   [cite:@tonhauser_how_2018].
+
+** How to proceed
+   To investigate and compare these two hypotheses, we will do two things:
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - Provide a modular probabilistic semantics that allows the two hypotheses to
+     be stated precisely.
+     - I.e., give a characterization of Bayesian models that encode the two
+       hypotheses, and formulate explicit linking assumptions using the very
+       same semantic repertoire.
+   - Fit these models to inference data and compare the fits.
+     
+* A modular probabilistic semantics
+** [cite/t:@grove_probabilistic_2023]
+   Following [cite/t:@grove_probabilistic_2023], we provide an interface for
+   stating a probabilistic semantics using /monads/. \\
+   #+begin: \bigskip \pause
+   This just means we have the following ingredients:
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - A type constructor $\mathtt{P}$ that takes any type $α$ onto the type
+     $\mathtt{P} α$ of /probabilistic programs/ that return α's.
+   - An operator `bind'
+     $$(∼) : \mathtt{P} α → (α → \mathtt{P} β) → \mathtt{P} β$$
+     allowing us to bind a probabilistic program of type $\mathtt{P} α$ to a
+     value of type $α$ used inside another probabilistic program. \\
+     #+beamer: \pause
+     #+begin_center
+     (Basically allows us to write sampling statements: $x ∼ m$.)
+     #+end_center
+     #+beamer: \pause
+   - An operator `return'
+     $$\pure{(·)} : α → \mathtt{P} α$$   
+
+** /tall/ as an example
+   In a non-probabilistic semantics, since /tall/ is an adjective, you might give
+   it a meaning of type $e → t$:
+   $$λx.\ct{height}(x) ≥ d$$
+   #+beamer: \pause
+   But where does the threshold come from?
+
+** /tall/ as an example
+   Solution: the meaning of /tall/ is represented by a probability distribution.
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - A probabilistic program of type $\mathtt{P} (e → t)$:
+     #+begin_export beamer
+     \begin{align*}
+     \begin{array}[t]{l}
+     d ∼ \ct{thresholdPrior} \\
+     \pure{λx.\ct{height}(x) ≥ d}
+     \end{array}
+     \end{align*}
+     #+end_export
+   - Returns the property true of an individual if their height exceeds the
+     threshold $d$.
+     - But $d$ takes on the probability distribution represented by
+       $\ct{thresholdPrior}$.
+     - So the meaning of /tall/ represents a probability distribution over
+       /properties/, each one fixed by some threshold $d$.  
+
+** Two levels of probabilistic involvement
+   The plan is now to make the following move:
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - Model linguistic meanings as programs, not of type $\mathtt{P} α$, but of
+     type $\mathtt{P} (\mathtt{P} α)$.
+     - The ``inner'' $\mathtt{P}$ --- $\mathtt{P}({\color{gb-orange}\mathtt{P}}
+       α)$ --- represents uncertainty that arises on individual occasions of use 
+       and interpretation, even after the meanings of expressions have been
+       fixed.
+     - The ``outer'' $\mathtt{P}$ --- ${\color{gb-orange}\mathtt{P}} (\mathtt{P}
+       α)$ --- represents /metalinguistic/ uncertainty; that is, uncertainty about
+       what interpretation to apply in the first place.      
+	
+** Two levels of probabilistic involvement: example
+   Say you're in a noisy bar. Someone says /Jo is -all/...
+   #+beamer: \pause
+   #+begin_export beamer
+   \begin{align*}
+   ⟦\textit{Jo is -all}⟧ &: \mathtt{P}(\mathtt{P} t) \\
+   ⟦\textit{Jo is -all}⟧ &= \begin{array}[t]{l}
+   τ ∼ \abbr{Bernoulli}(0.7) \\
+   \begin{cases}
+   \pure{\begin{array}[t]{l}
+   d ∼ \ct{heightThreshold} \\
+   \pure{\ct{height}(\ct{j}) ≥ d} 
+   \end{array}} & τ \vspace{1mm} \\
+   \pure{\begin{array}[t]{l}
+   d ∼ \ct{sizeThreshold} \\
+   \pure{\ct{size}(\ct{j}) ≤ d} 
+   \end{array}} & ¬τ
+   \end{cases}
+   \end{array}
+   \end{align*}
+   #+end_export
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - 70% chance the utterances was /Jo is tall/, 30% chance it was /Jo is small/.
+   - Having fixed one adjective or the other, there is uncertainty that arises
+     from the relevant degree threshold. 
+   
 * Models of factivity
+** Inference data: [cite/t:@degen_prior_2021]
+   [cite/t:@degen_prior_2021] investigate the projection behavior of twenty
+   clause-embedding predicates, systematically varying the contexts in which the
+   predicates are used.
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - For any given complement clause, a background fact is provided which is
+     intended to make the clause either likely or unlikely to be true...
 
+** Inference data: [cite/t:@degen_prior_2021]
+   #+attr_latex: :width 300px
+   [[./images/projection_fact.png]]
+
+** Inference data: [cite/t:@degen_prior_2021]
+   They additionally conduct a separate norming study intended to assess the
+   prior certainties associated with such complement clauses, paired with their
+   background facts.
+
+** Inference data: [cite/t:@degen_prior_2021]
+   #+attr_latex: :width 300px
+   [[./images/norming.png]]
+
+** Factivity and world knowledge
+   Our models of [cite/a:@degen_prior_2021]'s data vary whether two different
+   sources of uncertainty are /metalinguistic/ in nature versus uncertainty that
+   is tied to particular interpretations:
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - Uncertainty about factivity
+   - Uncertainty about world knowledge (i.e., the prior probability of the
+     complement clause being true)
+   #+beamer: \bigskip \pause
+   The fundamental discreteness hypothesis says that uncertainty about factivity
+   is metalinguistic. \\
+   #+beamer: \bigskip \pause
+   The fundamental gradience hypothesis says that it is tied to particular
+   interpretations.
+   #+beamer: \bigskip \pause
+   #+begin_center
+   *This gives us four models...*
+   #+end_center
+   
+** The discrete-factivity model
+   #+begin_export beamer
+   \begin{align*}
+   \abbr{discrete-factivity} &: \mathtt{P} (\mathtt{P} κ) \\
+   \abbr{discrete-factivity}\ \ &= \begin{array}[t]{l}
+   ⟨\vect{v}, \vect{w}⟩ ∼ \abbr{priors} \\
+   \vect{τ_v} ∼ \abbr{Bernoulli}(\vect{v}) \\
+   \pure{
+   \begin{array}{l}
+   \vect{τ_w} ∼ \abbr{Bernoulli}(\vect{w}) \\
+   \pure{\vect{τ_v} ∨ \vect{τ_w}}
+   \end{array}
+   }
+   \end{array}
+   \end{align*}
+   #+end_export
+   *Important*: The Bernoulli variable $\vect{τ_v}$ associated determining whether
+   or not a predicate is factive is sampled at the ``outer'' $\mathtt{P}$.
+
+** The wholly-gradient model
+   #+begin_export beamer
+   \begin{align*}
+   \abbr{wholly-gradient} &: \mathtt{P} (\mathtt{P} κ) \\
+   \abbr{wholly-gradient} &= \begin{array}[t]{l}
+   ⟨\vect{v}, \vect{w}⟩ ∼ \abbr{priors} \\
+   \pure{
+   \begin{array}{l}
+   \vect{τ_v} ∼ \abbr{Bernoulli}(\vect{v}) \\
+   \vect{τ_w} ∼ \abbr{Bernoulli}(\vect{w}) \\
+   \pure{⟨\vect{τ_v}, \vect{τ_w}⟩}
+   \end{array}
+   }
+   \end{array}
+   \end{align*}
+   #+end_export
+   *Important*: The Bernoulli variable $\vect{τ_v}$ associated determining whether
+   or not a predicate is factive is sampled at the ``inner'' $\mathtt{P}$.
+
+** The discrete-world model
+   #+begin_export beamer
+   \begin{align*}
+   \abbr{discrete-world} &: \mathtt{P} (\mathtt{P} κ) \\
+   \abbr{discrete-world} &= \begin{array}[t]{l}
+   ⟨\vect{v}, \vect{w}⟩ ∼ \abbr{priors} \\
+   \vect{τ_w} ∼ \abbr{Bernoulli}(\vect{w}) \\
+   \pure{
+   \begin{array}{l}
+   \vect{τ_v} ∼ \abbr{Bernoulli}(\vect{v}) \\
+   \pure{⟨\vect{τ_v}, \vect{τ_w}⟩}
+   \end{array}
+   }
+   \end{array}
+   \end{align*}
+   #+end_export
+
+** The wholly-discrete model
+   #+begin_export beamer
+   \begin{align*}
+   \abbr{wholly-discrete} &: \mathtt{P} (\mathtt{P} κ) \\
+   \abbr{wholly-discrete} &= \begin{array}[t]{l}
+   ⟨\vect{v}, \vect{w}⟩ ∼ \abbr{priors} \\
+   \vect{τ_v} ∼ \abbr{Bernoulli}(\vect{v}) \\
+   \vect{τ_w} ∼ \abbr{Bernoulli}(\vect{w}) \\
+   \pure{\pure{⟨\vect{τ_v}, \vect{τ_w}⟩}}
+   \end{array}             
+   \end{align*}
+   #+end_export
+
+** Comparisons
+   We compare the four models in terms of their expected log pointwise
+   predictive densities (ELPDs) computed under the widely applicable information
+   criterion [cite:@watanabe_widely_2013;@gelman_understanding_2014].
+   #+beamer: \pause
+   #+attr_latex: :width 200px
+   [[./images/fit_elpd.pdf]]
+
+** A few follow-ups
+   Granted, this investigation is /post hoc/. To draw firmer conclusions, we
+   should test these models against newly collected data. \\
+   #+beamer: \bigskip \pause
+   We do this in two ways:
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - Replicate [cite/a:@degen_prior_2021]'s experiment and use the posterior
+     parameter distributions from our first set of models as priors in a new st
+     of models.
+   - Modify the methodology slightly, so that complement clauses have minimal
+     lexical content.
+     - Helps get rid of the effect of world knowledge.
+
+** Our replication
+   Given data from 288 new participants:
+   #+beamer: \pause
+   #+attr_latex: :width 250px
+   [[./images/contentful_elpd.pdf]]
+
+** First modification: the bleached task
+   #+attr_latex: :width 300px
+   [[./images/bleached.png]]
+
+** Bleached comparisons
+   Given data from 47 participants:
+   #+attr_latex: :width 250px
+   [[./images/bleached_elpd.pdf]]
+
+** Second modification: the templatic task
+   #+attr_latex: :width 300px
+   [[./images/templatic.png]]
+
+** Templatic comparisons
+   Given data 49 participants:
+   #+attr_latex: :width 250px
+   [[./images/templatic_elpd.pdf]]
+
+* Summing up
+** Conclusions
+   We find pretty firm evidence in support of the fundamental discreteness
+   hypothesis.
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - Classical semantic accounts of the behavior of factive predicates
+     [cite:@kiparsky_fact_1970; @karttunen_observations_1971; i.a.] can remain
+     intact.
+   #+beamer: \bigskip \pause
+   Broader point:
+   #+beamer: \pause
+   #+attr_beamer: :overlay <+->
+   - We can connect semantic theory to experimental data using the traditional
+     semantic toolkit (i.e., typed λ-calculus).
+   - But we have to integrate semantic analyses into theories of inference
+     carefully... here, we choose to integrate them in a modular fashion, using
+     monads.
+   - The strategy of using an already-available formal apparatus allows linking
+     assumptions to be made explicit and testable.
+       
 ** References
    :PROPERTIES:
    :beamer_opt: allowframebreaks
