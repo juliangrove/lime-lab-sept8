@@ -326,7 +326,7 @@
    \begin{array}{l}
    \vect{τ_v} ∼ \abbr{Bernoulli}(\vect{v}) \\
    \vect{τ_w} ∼ \abbr{Bernoulli}(\vect{w}) \\
-   \pure{⟨\vect{τ_v}, \vect{τ_w}⟩}
+   \pure{\vect{τ_v} ∨ \vect{τ_w}}
    \end{array}
    }
    \end{array}
@@ -345,7 +345,7 @@
    \pure{
    \begin{array}{l}
    \vect{τ_v} ∼ \abbr{Bernoulli}(\vect{v}) \\
-   \pure{⟨\vect{τ_v}, \vect{τ_w}⟩}
+   \pure{\vect{τ_v} ∨ \vect{τ_w}}
    \end{array}
    }
    \end{array}
@@ -360,7 +360,7 @@
    ⟨\vect{v}, \vect{w}⟩ ∼ \abbr{priors} \\
    \vect{τ_v} ∼ \abbr{Bernoulli}(\vect{v}) \\
    \vect{τ_w} ∼ \abbr{Bernoulli}(\vect{w}) \\
-   \pure{\pure{⟨\vect{τ_v}, \vect{τ_w}⟩}}
+   \pure{\pure{\vect{τ_v} ∨ \vect{τ_w}}}
    \end{array}             
    \end{align*}
    #+end_export
